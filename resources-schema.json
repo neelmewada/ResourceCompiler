@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "default": "stdlib.h"
+        }
+      ]
+    },
+    "content": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "namespace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "name"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "namespace",
+    "dependencies",
+    "content"
+  ]
+}

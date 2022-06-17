@@ -1,0 +1,15 @@
+{
+  "name": "Shaders",
+  "namespace": "Resources::Shaders",
+  "dependencies": ["stdlib.h"],
+  "content": [
+    {
+      "path": "shaders/cube.psh",
+      "name": "cube_psh"
+    },
+    {
+      "path": "shaders/cube.vsh",
+      "name": "cube_vsh"
+    }
+  ]
+}

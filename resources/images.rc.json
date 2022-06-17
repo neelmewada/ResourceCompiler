@@ -1,0 +1,11 @@
+{
+  "name": "Images",
+  "namespace": "Resources::Images",
+  "dependencies": ["stdlib.h"],
+  "content": [
+    {
+      "path": "images/icon.png",
+      "name": "icon1"
+    }
+  ]
+}

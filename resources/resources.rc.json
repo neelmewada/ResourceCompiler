@@ -1,0 +1,15 @@
+{
+  "name": "Resources",
+  "namespace": "Resources",
+  "dependencies": ["stdlib.h"],
+  "content": [
+    {
+      "path": "shaders.rc",
+      "name": ""
+    },
+    {
+      "path": "images.rc",
+      "name": ""
+    }
+  ]
+}
