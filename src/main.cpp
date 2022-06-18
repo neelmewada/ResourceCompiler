@@ -40,46 +40,56 @@ void CleanupDirectory(fs::path path);
 Resource LoadResourceDataFromJSON(fs::path jsonPath);
 void ProcessResource(Resource& resource, bool isRootResource);
 string ProcessFileContent(fs::path filePath, string name, string* header);
+bool IsShaderFile(string extension);
 
 fs::path resourceDirPath;
 fs::path resourceOutDirPath;
 
 int main(int argc, char* argv[])
 {
-    //DoTest();
+    DoTest();
 
     if (argc <= 1)
     {
-        cerr << "ERROR: No valid arguments found. Please pass at least 2 argument to run the ResourceCompiler." << endl;
+        cerr << "ERROR: No valid arguments found. Please pass at least 1 argument to run the ResourceCompiler." << endl;
         return 1;
     }
 
-    fs::path inputPath = fs::path(argv[1]);
-    fs::path outputPath = fs::path(argc > 2 ? argv[2] : argv[1]);
-    fs::path currentPath = fs::current_path();
+    fs::path inputResourceJsonPath = fs::path(argv[1]);
+    if (!inputResourceJsonPath.has_extension() ||
+        (inputResourceJsonPath.extension() != ".json" && inputResourceJsonPath.filename().string().find(".rc") == string::npos))
+    {
+        cerr << "ERROR: The 1st argument doesn't have an extension: .rc.json" << endl;
+        return 2;
+    }
 
-    resourceDirPath = inputPath.is_absolute() ? inputPath : (currentPath / inputPath);
-    resourceOutDirPath = outputPath.is_absolute() ? outputPath : (currentPath / outputPath);
+    fs::path currentPath = fs::current_path();
+    resourceDirPath = inputResourceJsonPath.is_absolute()
+                      ? inputResourceJsonPath.parent_path()
+                      : (currentPath / inputResourceJsonPath.parent_path());
+
+    fs::path outputDirPath = (argc > 2 ? fs::path(argv[2]) : resourceDirPath);
+
+    resourceOutDirPath = outputDirPath.is_absolute() ? outputDirPath : (currentPath / outputDirPath);
 
     if (!is_directory(resourceDirPath))
     {
         cerr << "ERROR: No directory found at path " << resourceDirPath.string() << endl;
-        return 2;
-    }
-
-    if (!fs::exists((resourceDirPath / "resources.rc.json")))
-    {
-        cerr << "ERROR: couldn't find resources.rc.json inside directory: " << resourceDirPath << endl;
         return 3;
     }
 
     CleanupDirectory(resourceOutDirPath);
 
-    Resource mainResource = LoadResourceDataFromJSON(resourceDirPath / "resources.rc.json");
+    Resource mainResource = LoadResourceDataFromJSON(inputResourceJsonPath);
 
     ProcessResource(mainResource, true);
 
     return 0;
+}
+
+bool IsShaderFile(string extension)
+{
+    return extension == ".hlsl" || extension == ".fx";
 }
 
 void CleanupDirectory(fs::path path)
