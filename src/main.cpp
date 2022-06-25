@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <fstream>
 #include "json.hpp"
-#include "test.h"
 
 namespace fs = std::filesystem;
 
@@ -47,7 +46,6 @@ fs::path resourceOutDirPath;
 
 int main(int argc, char* argv[])
 {
-    DoTest();
 
     if (argc <= 1)
     {
