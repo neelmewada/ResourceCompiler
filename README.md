@@ -1,5 +1,5 @@
 # ResourceCompiler
-A simple &amp; easy to use resource compiler for C/C++ using JSON.
+A simple &amp; easy to use resource compiler for C/C++ using JSON. Embed your icons, textures, images, shader code, or any kind of resource in your C/C++ binary with this easy to use ResourceCompiler!
 
 ## Usage
 
